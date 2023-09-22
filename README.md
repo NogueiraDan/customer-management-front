@@ -15,7 +15,7 @@ npm install
 Rodando o projeto:
 
 ```
-npm run start:dev
+npm run dev
 ```
 
 ### 💭​ Observações
