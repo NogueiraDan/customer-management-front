@@ -1,5 +1,7 @@
 import style from "./Login.module.css";
 import logo from "../../assets/logo.webp";
+import custome from "../../assets/custome.png"
+import psioffice from "../../assets/psioffice.png";
 import { Input } from "../../components/Input";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -50,7 +52,7 @@ export function Login() {
       <div className={`container ${style.container}`}>
         <div className={style.wrapper}>
           <div>
-            <img src={logo} alt="" />
+            <img src={custome} alt="" width={150} height={150}/>
           </div>
           <div className={style.card}>
             <h2>Olá, seja bem vindo</h2>

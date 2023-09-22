@@ -1,5 +1,6 @@
 import style from "./Header.module.css";
 import logo from "../../assets/logo_branca.png";
+import custome from "../../assets/custome.png"
 import { CgProfile } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -11,8 +12,8 @@ export function Header() {
   return (
     <header className={style.background}>
       <div className={style.image} onClick={() => navigate("/dashboard")}>
-        <img src={logo} alt="" />
-        <span>Hero HairDresses</span>
+      <img src={custome} alt="" width={80} height={80}/>
+        <span>Customer Management</span>
       </div>
       <div className={style.profile}>
         <div className={style.dropdown} onClick={() => setOpen(!open)}>
