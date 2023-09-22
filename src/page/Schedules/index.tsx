@@ -127,7 +127,7 @@ export function Schedules() {
       cliente: customerData.id,
     };
     console.log(data);
-
+  
     const headers = {
       Authorization: `Bearer ${userToken}`,
     };
@@ -192,7 +192,7 @@ export function Schedules() {
               >
                 {availableSchedules.map((hour, index) => {
                   return (
-                    <option value={hour} key={index}>
+                    <option value={hour} key={index}> 
                       {hour}
                     </option>
                   );

@@ -29,7 +29,7 @@ export function Dashboard() {
         }
       )
       .then((response) => {
-        // console.log(response.data)
+        console.log(response.data)
         setSchedules(response.data);
       })
       .catch((error) => {
@@ -77,15 +77,7 @@ export function Dashboard() {
       <Header />
       <div className={style.dataTitle}>
         <h2>Bem vindo(a), {user.nome} </h2>
-        <p>
-          Esta é sua lista de horários{" "}
-          {isToday(date) && (
-            <span>
-              <strong>de hoje,</strong>
-            </span>
-          )}
-          dia <strong>{format(date, "dd/MM/yyy")}</strong>
-        </p>
+        <p>Esta é sua lista de horários para <strong>{scheduleDate}</strong></p>
       </div>
       <h2 className={style.nextSchedules}>Agendamentos do Dia</h2>
       <div className={style.schedule}>

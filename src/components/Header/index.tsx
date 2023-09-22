@@ -13,7 +13,7 @@ export function Header() {
     <header className={style.background}>
       <div className={style.image} onClick={() => navigate("/dashboard")}>
       <img src={custome} alt="" width={80} height={80}/>
-        <span>Customer Management</span>
+        {/* <span>Customer Management</span> */}
       </div>
       <div className={style.profile}>
         <div className={style.dropdown} onClick={() => setOpen(!open)}>
