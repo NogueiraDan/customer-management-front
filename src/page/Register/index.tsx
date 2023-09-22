@@ -1,5 +1,7 @@
 import style from "./Register.module.css";
 import logo from "../../assets/logo.webp";
+import register from "../../assets/background-register.jpg"
+import custome from "../../assets/custome.png"
 import { Input } from "../../components/Input";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/Button";
@@ -57,7 +59,7 @@ export function Register() {
         </p>
         <div className={style.wrapper}>
           <div className={style.imageContainer}>
-            <img src={logo} alt="" />
+            <img src={custome} alt="" width={250} height={250}/>
           </div>
           <div className={style.card}>
             <h2>Área de Cadastro</h2>
