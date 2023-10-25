@@ -64,7 +64,7 @@ export function Schedules() {
       Authorization: `Bearer ${userToken}`,
     };
     axios
-      .get(`http://localhost:3000/profissionais/${user.id}/clientes`, {
+      .get(`https://customer-management-api-bdjh.onrender.com/profissionais/${user.id}/clientes`, {
         headers,
       })
       .then((res) => {
@@ -77,7 +77,7 @@ export function Schedules() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3000/agendamentos/horarios-disponiveis/${currentData}`,
+        `https://customer-management-api-bdjh.onrender.com/agendamentos/horarios-disponiveis/${currentData}`,
         {
           headers: {
             Authorization: `Bearer ${userToken}`,
@@ -132,7 +132,7 @@ export function Schedules() {
       Authorization: `Bearer ${userToken}`,
     };
 
-    axios.post("http://localhost:3000/agendamentos/", data, {headers})
+    axios.post("https://customer-management-api-bdjh.onrender.com/agendamentos/", data, {headers})
     .then((res)=>{
       toast.success(`Agendamento realizado com Sucesso!`);
       navigate('/dashboard');

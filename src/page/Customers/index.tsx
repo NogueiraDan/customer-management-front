@@ -59,7 +59,7 @@ export function Customers() {
     Authorization: `Bearer ${token}`,
   }
 
-   axios.post("http://localhost:3000/clientes/", data, {headers})
+   axios.post("https://customer-management-api-bdjh.onrender.com/clientes/", data, {headers})
    .then((res)=>{
     console.log(res)
     toast.success(`Cliente cadastrado com sucesso!`);

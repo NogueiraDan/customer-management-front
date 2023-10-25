@@ -6,7 +6,6 @@ import style from "./Dashboard.module.css";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { ptBR } from "date-fns/locale";
-import { format, isToday } from "date-fns";
 import axios from "axios";
 
 export function Dashboard() {
@@ -21,7 +20,7 @@ export function Dashboard() {
     const token = localStorage.getItem("token:customer");
     axios
       .get(
-        `http://localhost:3000/profissionais/1/agendamentos-hoje?data=${scheduleDate}`,
+        `https://customer-management-api-bdjh.onrender.com/profissionais/${user.id}/agendamentos-hoje?data=${scheduleDate}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -37,6 +36,7 @@ export function Dashboard() {
       });
   }, [scheduleDate]);
 
+
   // Primeira request de Agendamentos do Dia de Hoje
   useEffect(() => {
     const token = localStorage.getItem("token:customer");
@@ -44,10 +44,9 @@ export function Dashboard() {
     const mes = String(date.getMonth() + 1).padStart(2, "0");
     const ano = date.getFullYear();
     const dataFormatada = `${dia}/${mes}/${ano}`;
-
     axios
       .get(
-        `http://localhost:3000/profissionais/1/agendamentos-hoje?data=${dataFormatada}`,
+        `https://customer-management-api-bdjh.onrender.com/profissionais/${user.id}/agendamentos-hoje?data=${dataFormatada}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -68,7 +67,6 @@ export function Dashboard() {
     const ano = date.getFullYear();
     const dataFormatada = `${dia}/${mes}/${ano}`;
     setScheduleDate(dataFormatada);
-    console.log("Date: " + date);
     console.log("scheduleDate in Dashboard.tsx: " + dataFormatada);
   };
 

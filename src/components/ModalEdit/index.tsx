@@ -44,7 +44,7 @@ export function ModalEdit({
     console.log("Data Formatada para o envio da Requisição: " + currentData);
     axios
       .get(
-        `http://localhost:3000/agendamentos/horarios-disponiveis/${currentData}`,
+        `https://customer-management-api-bdjh.onrender.com/agendamentos/horarios-disponiveis/${currentData}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -80,7 +80,7 @@ export function ModalEdit({
     console.log("Hora: " + data.hora);
 
     axios
-      .patch(`http://localhost:3000/agendamentos/${id}`, data, { headers })
+      .patch(`https://customer-management-api-bdjh.onrender.com/agendamentos/${id}`, data, { headers })
       .then((res) => {
         console.log(res);
         toast.success(`Agendamento atualizado! Recarregue a página`);
@@ -121,7 +121,7 @@ export function ModalEdit({
                 id=""
                 onChange={(e) => handleChangehour(e.target.value)}
               >
-                {availableSchedules.map((hora, index) => {
+                {availableSchedules.map((hora:any, index:any) => {
                   return (
                     <option value={hora} key={index}>
                       {hora}

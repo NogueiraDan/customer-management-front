@@ -23,10 +23,10 @@ export const Card = ({ id, hora, data, nome, telefone }: ISchedule) => {
     setOpenModal(!openModal);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id:any) => {
 
     console.log("Id do agendamento: "+id)
-    axios.delete(`http://localhost:3000/agendamentos/${id}`)
+    axios.delete(`https://customer-management-api-bdjh.onrender.com/agendamentos/${id}`)
     .then((res)=>{
       // toast.success(`Agendamento deletado com Sucesso!`);
       window.location.reload()

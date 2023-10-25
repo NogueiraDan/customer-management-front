@@ -75,23 +75,10 @@ export function AuthProvider({ children }: IAuthProvider) {
     setDate(date);
   };
 
-  // useEffect(() => {
-  //   api
-  //     .get('/schedules', {
-  //       params: {
-  //         date,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       setSchedules(response.data);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }, [date]);
-
   async function signIn({ emailValue, senhaValue }: ISignIn) {
    
     try {
-      const  {data}  = await axios.post('http://localhost:3000/auth/login', {
+      const  {data}  = await axios.post('https://customer-management-api-bdjh.onrender.com/auth/login', {
        email: emailValue,
        senha: senhaValue
       });

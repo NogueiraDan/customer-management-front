@@ -1,6 +1,4 @@
 import style from "./Register.module.css";
-import logo from "../../assets/logo.webp";
-import register from "../../assets/background-register.jpg"
 import custome from "../../assets/custome.png"
 import { Input } from "../../components/Input";
 import { Link } from "react-router-dom";
@@ -11,6 +9,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { BsPerson, BsKey } from "react-icons/bs";
 import { AiOutlineMail } from "react-icons/ai";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 interface IFormValues {
   name: string;
@@ -19,6 +19,8 @@ interface IFormValues {
 }
 
 export function Register() {
+
+  const navigate = useNavigate();
   const schema = yup.object().shape({
     name: yup.string().required("Campo de nome obrigatório"),
     email: yup
@@ -38,14 +40,15 @@ export function Register() {
 
   const submit = handleSubmit((data) => {
     axios
-      .post("http://localhost:3000/profissionais/", {
+      .post("https://customer-management-api-bdjh.onrender.com/profissionais/", {
         nome: data.name,
         email: data.email,
         senha: data.password,
       })
       .then((result) => {
         console.log(result);
-        alert("Profissional Cadastrado com Sucesso!");
+        toast.success('Usuário registrado com sucesso');
+        navigate('/');
       })
       .catch((err) => {
         alert("Ocorreu algum erro!"+err);

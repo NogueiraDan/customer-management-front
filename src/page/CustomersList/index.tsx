@@ -13,7 +13,7 @@ export function CustomersList() {
       Authorization: `Bearer ${userToken}`,
     };
     axios
-      .get(`http://localhost:3000/profissionais/${user.id}/clientes`, {
+      .get(`https://customer-management-api-bdjh.onrender.com/profissionais/${user.id}/clientes`, {
         headers,
       })
       .then((res) => {
