@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate  } from 'react-router-dom';
 import { Login } from '../page/Login';
 import { Register } from '../page/Register';
 import { Dashboard } from '../page/Dashboard';
@@ -6,11 +6,14 @@ import { Schedules } from '../page/Schedules';
 import { PrivateRoute } from './PrivateRoute';
 import { EditProfile } from '../page/EditProfile';
 import { Customers } from '../page/Customers';
+import {CustomersList} from "../page/CustomersList";
 
 export const RouteApp = () => {
+
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      {/* <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} /> */}
       <Route path="/register" element={<Register />} />
       <Route
         path="/dashboard"
@@ -37,10 +40,10 @@ export const RouteApp = () => {
         }
       />
       <Route
-        path="/edit-profile"
+        path="/list-customers"
         element={
           <PrivateRoute>
-            <EditProfile />
+            <CustomersList />
           </PrivateRoute>
         }
       />

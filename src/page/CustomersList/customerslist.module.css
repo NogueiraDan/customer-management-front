@@ -1,0 +1,24 @@
+.customerWrapper {
+  /* display: flex; */
+  /* justify-content: space-between; */
+  background-color: var(--white);
+  border-radius: 8px;
+  align-items: center;
+  height: 150px;
+  width: 100%;
+  box-shadow: 4px 4px 8px rgb(0, 0, 0, 0.3);
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  cursor: pointer;
+  color: var(--primary);
+}
+
+.title {
+  margin-top: 30px;
+  color: var(--primary);
+}
+
+.container {
+  /* margin-top: 20px; */
+  padding: 0 50px;
+}

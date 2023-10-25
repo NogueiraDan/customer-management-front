@@ -5,6 +5,7 @@ import { CgProfile } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../hooks/auth";
+
 export function Header() {
   const { signOut } = useAuth();
   const [open, setOpen] = useState(false);
@@ -22,16 +23,20 @@ export function Header() {
 
           <ul className={`${style.dropdownMenu} ${open && style.open}`}>
             <Link to={"/customers"}>
-              <li className={style.dropdownMenuItem}>Clientes</li>
+              <li className={style.dropdownMenuItem}>Cadastrar clientes</li>
             </Link>
 
             <Link to={"/schedules"}>
               <li className={style.dropdownMenuItem}>Agendamentos</li>
             </Link>
 
-            <Link to={"/edit-profile"}>
-              <li className={style.dropdownMenuItem}>Editar Perfil</li>
+            <Link to={"/list-customers"}>
+              <li className={style.dropdownMenuItem}>Listar Clientes</li>
             </Link>
+
+            {/* <Link to={"/edit-profile"}>
+              <li className={style.dropdownMenuItem}>Editar Perfil</li>
+            </Link> */}
             <li className={style.dropdownMenuItem} onClick={signOut}>
               Sair
             </li>
