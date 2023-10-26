@@ -12,18 +12,9 @@ interface IAuthContextData {
   signOut: () => void;
   user: IUserData;
   availableSchedules: Array<string>;
-  schedules: Array<ISchedule>;
-  date: string;
-  handleSetDate: (date: string) => void;
   isAuthenticated: boolean;
 }
 
-interface ISchedule {
-  name: string;
-  phone: string;
-  date: Date;
-  id: string;
-}
 interface IUserData {
   nome: string;
   email: string;
@@ -36,9 +27,6 @@ interface ISignIn {
 export const AuthContext = createContext({} as IAuthContextData);
 
 export function AuthProvider({ children }: IAuthProvider) {
-
-  const [schedules, setSchedules] = useState<Array<ISchedule>>([]);
-  const [date, setDate] = useState('');
   const availableSchedules = [
     '07',
     '08',
@@ -56,8 +44,6 @@ export function AuthProvider({ children }: IAuthProvider) {
     '20',
     '21',
   ];
-
-
   const [user, setUser] = useState(() => {
     const user = localStorage.getItem('user:customer');
     if (user) {
@@ -65,15 +51,10 @@ export function AuthProvider({ children }: IAuthProvider) {
     }
     return {};
   });
-
-
   // Variavel de controle de usuário logado
   const isAuthenticated = !!user && Object.keys(user).length !== 0;
-
   const navigate = useNavigate();
-  const handleSetDate = (date: string) => {
-    setDate(date);
-  };
+
 
   async function signIn({ emailValue, senhaValue }: ISignIn) {
    
@@ -113,6 +94,8 @@ export function AuthProvider({ children }: IAuthProvider) {
     localStorage.removeItem('user:customer');
     navigate('/');
   }
+
+
   return (
     <AuthContext.Provider
       value={{
@@ -120,9 +103,6 @@ export function AuthProvider({ children }: IAuthProvider) {
         signOut,
         user,
         availableSchedules,
-        schedules,
-        date,
-        handleSetDate,
         isAuthenticated,
       }}
     >
