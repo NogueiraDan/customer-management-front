@@ -79,18 +79,18 @@ export function ModalEdit({
     console.log("Data: " + data.data);
     console.log("Hora: " + data.hora);
 
-    axios
-      .patch(`https://customer-management-api-bdjh.onrender.com/agendamentos/${id}`, data, { headers })
-      .then((res) => {
-        console.log(res);
-        toast.success(`Agendamento atualizado! Recarregue a página`);
-        handleChangeModal();
-      })
-      .catch((err) => {
-        if (isAxiosError(err)) {
-          toast.error(err.response?.data.message);
-        }
-      });
+    // axios
+    //   .patch(`https://customer-management-api-bdjh.onrender.com/agendamentos/${id}`, data, { headers })
+    //   .then((res) => {
+    //     console.log(res);
+    //     toast.success(`Agendamento atualizado! Recarregue a página`);
+    //     handleChangeModal();
+    //   })
+    //   .catch((err) => {
+    //     if (isAxiosError(err)) {
+    //       toast.error(err.response?.data.message);
+    //     }
+    //   });
   };
 
   if (isOpen) {

@@ -1,9 +1,7 @@
 import style from "./Card.module.css";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
-import { getHours, isAfter } from "date-fns";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { ModalEdit } from "../ModalEdit";
 import axios, { isAxiosError } from "axios";
 import { toast } from "react-toastify";
@@ -16,7 +14,6 @@ interface ISchedule {
   telefone: string;
 }
 export const Card = ({ id, hora, data, nome, telefone }: ISchedule) => {
-  const navigate = useNavigate();
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const handleChangeModal = () => {
@@ -28,7 +25,6 @@ export const Card = ({ id, hora, data, nome, telefone }: ISchedule) => {
     console.log("Id do agendamento: "+id)
     axios.delete(`https://customer-management-api-bdjh.onrender.com/agendamentos/${id}`)
     .then((res)=>{
-      // toast.success(`Agendamento deletado com Sucesso!`);
       window.location.reload()
     })
     .catch((err) => {

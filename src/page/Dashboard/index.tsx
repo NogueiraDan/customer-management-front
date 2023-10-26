@@ -9,15 +9,40 @@ import { ptBR } from "date-fns/locale";
 import axios from "axios";
 
 export function Dashboard() {
-  const [date, setDate] = useState(new Date());
-  const [scheduleDate, setScheduleDate] = useState<any>();
-  const [schedules, setSchedules] = useState<Array<any>>([]);
+  const date = new Date();
   const { user } = useAuth();
+  const token = localStorage.getItem("token:customer");
+  const dia = String(date.getDate()).padStart(2, "0");
+  const mes = String(date.getMonth() + 1).padStart(2, "0");
+  const ano = date.getFullYear();
+  const dataFormatada = `${dia}/${mes}/${ano}`;
+  const [scheduleDate, setScheduleDate] = useState<any>(dataFormatada);
+  const [schedules, setSchedules] = useState<Array<any>>([]);
+
+  // Primeira request de Agendamentos do Dia de Hoje
+  useEffect(() => {
+    console.log(`Data Formatada para primeira request: ${dataFormatada}`);
+    axios
+      .get(
+        `https://customer-management-api-bdjh.onrender.com/profissionais/${user.id}/agendamentos-hoje?data=${dataFormatada}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        setSchedules(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   
   // Requisição dos demais agendamentos
   useEffect(() => {
-    const token = localStorage.getItem("token:customer");
+    console.log(`schedule Date da requisição dos demais agendamentos: ${scheduleDate}`)
     axios
       .get(
         `https://customer-management-api-bdjh.onrender.com/profissionais/${user.id}/agendamentos-hoje?data=${scheduleDate}`,
@@ -36,38 +61,12 @@ export function Dashboard() {
       });
   }, [scheduleDate]);
 
-
-  // Primeira request de Agendamentos do Dia de Hoje
-  useEffect(() => {
-    const token = localStorage.getItem("token:customer");
-    const dia = String(date.getDate()).padStart(2, "0");
-    const mes = String(date.getMonth() + 1).padStart(2, "0");
-    const ano = date.getFullYear();
-    const dataFormatada = `${dia}/${mes}/${ano}`;
-    axios
-      .get(
-        `https://customer-management-api-bdjh.onrender.com/profissionais/${user.id}/agendamentos-hoje?data=${dataFormatada}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((response) => {
-        setSchedules(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
   const handleDataChange = (date: Date) => {
     const dia = String(date.getDate()).padStart(2, "0");
     const mes = String(date.getMonth() + 1).padStart(2, "0");
     const ano = date.getFullYear();
     const dataFormatada = `${dia}/${mes}/${ano}`;
     setScheduleDate(dataFormatada);
-    console.log("scheduleDate in Dashboard.tsx: " + dataFormatada);
   };
 
   return (
