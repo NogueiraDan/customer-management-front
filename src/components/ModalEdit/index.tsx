@@ -1,9 +1,8 @@
 import { AiOutlineClose } from "react-icons/ai";
 import style from "./ModalEdit.module.css";
-import { useAuth } from "../../hooks/auth";
 import { useEffect, useState } from "react";
-import axios, { isAxiosError } from "axios";
 import { toast } from "react-toastify";
+import axios, { isAxiosError } from "axios";
 
 interface IModal {
   isOpen: boolean;
@@ -22,26 +21,28 @@ export function ModalEdit({
   id,
   data,
 }: IModal) {
-
-  
   const [date, setDate] = useState<any>();
   const [horaSchedule, setHoraSchedule] = useState("");
+  const [currentData, setCurrentData] = useState<any>();
+  const [remarcacao, setRemarcacao] = useState();
   const [availableSchedules, setAvailableSchedules] = useState<any>();
   const token = localStorage.getItem("token:customer");
-  const currentValue = new Date();
-  const [currentData, setCurrentData] = useState<any>();
+
 
   const handleSetDate = (date: string) => {
-    console.log("Data do calendario: "+date);
+    console.log("Data do calendario: " + date);
     setDate(date);
     const partes = date.split("-");
     const formatedData = `${partes[2]}${partes[1]}${partes[0]}`;
-    console.log("Current Data para a requisição: "+formatedData);
-    setCurrentData(formatedData)
+    console.log("Current Data para a requisição: " + formatedData);
+    setCurrentData(formatedData);
   };
 
   useEffect(() => {
-    console.log("Data Formatada para o envio da Requisição: " + currentData);
+    console.log(
+      "Modal Edit.tsx ~ Data Formatada para o envio da Requisição: " +
+        currentData
+    );
     axios
       .get(
         `https://customer-management-api-bdjh.onrender.com/agendamentos/horarios-disponiveis/${currentData}`,
@@ -72,25 +73,25 @@ export function ModalEdit({
     const data = {
       data: dataFormatada,
       hora: horaSchedule ? horaSchedule : hora,
+      tipo: remarcacao
     };
     const headers = {
       Authorization: `Bearer ${token}`,
     };
-    console.log("Data: " + data.data);
-    console.log("Hora: " + data.hora);
+    console.log(data)
 
-    // axios
-    //   .patch(`https://customer-management-api-bdjh.onrender.com/agendamentos/${id}`, data, { headers })
-    //   .then((res) => {
-    //     console.log(res);
-    //     toast.success(`Agendamento atualizado! Recarregue a página`);
-    //     handleChangeModal();
-    //   })
-    //   .catch((err) => {
-    //     if (isAxiosError(err)) {
-    //       toast.error(err.response?.data.message);
-    //     }
-    //   });
+    axios
+      .patch(`https://customer-management-api-bdjh.onrender.com/agendamentos/${id}`, data, { headers })
+      .then((res) => {
+        console.log(res);
+        toast.success(`Agendamento atualizado! Recarregue a página`);
+        handleChangeModal();
+      })
+      .catch((err) => {
+        if (isAxiosError(err)) {
+          toast.error(err.response?.data.message);
+        }
+      });
   };
 
   if (isOpen) {
@@ -121,14 +122,28 @@ export function ModalEdit({
                 id=""
                 onChange={(e) => handleChangehour(e.target.value)}
               >
-                {availableSchedules.map((hora:any, index:any) => {
+                {availableSchedules ? (availableSchedules.map((hora: any, index: any) => {
                   return (
                     <option value={hora} key={index}>
                       {hora}
                     </option>
                   );
-                })}
+                })) : null} 
+                
               </select>
+            </div>
+
+            <div className={style.input}>
+              <label htmlFor="">Marque o campo de remarcação</label>
+              <input
+                type="checkbox"
+                id="remarcacao"
+                name="remarcacao"
+                value="remarcação"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setRemarcacao(e.target.value)
+                }
+              />
             </div>
           </div>
           <div className={style.footer}>

@@ -1,9 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Header } from "../../components/Header";
 import { InputSchedule } from "../../components/InputSchedule";
-import { Input } from "../../components/Input";
 import style from "./Customers.module.css";
-import { BsFillChatRightTextFill } from "react-icons/bs";
 import { toast } from "react-toastify";
 import axios, { isAxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
