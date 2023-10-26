@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "../../components/Header";
-import axios, { isAxiosError } from "axios";
+import axios from "axios";
 import style from "./customerslist.module.css";
 
 export function CustomersList() {
   const [profissionalCustomers, setProfissionalCustomers] = useState<any>([]);
   useEffect(() => {
-    let user = JSON.parse(localStorage.getItem("user:customer"));
+    let user = JSON.parse(localStorage.getItem("user:customer") || '');
     let userToken = localStorage.getItem("token:customer");
 
     const headers = {

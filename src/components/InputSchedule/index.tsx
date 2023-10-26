@@ -1,4 +1,4 @@
-import { ForwardRefRenderFunction, ReactNode, forwardRef } from 'react';
+import { ForwardRefRenderFunction, forwardRef } from 'react';
 import style from './InputSchedule.module.css';
 
 interface IInput {

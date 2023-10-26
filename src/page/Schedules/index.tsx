@@ -20,9 +20,9 @@ export function Schedules() {
   const [date, setDate] = useState<any>();
   const [currentData, setCurrentData] = useState<any>();
   const [horaSchedule, setHoraSchedule] = useState("");
-  const [userData, setUserData] = useState();
-  const [userToken, setUserToken] = useState("");
-  const [customerData, setCustomerData] = useState();
+  const [userData, setUserData] = useState<any | undefined>();
+  const [userToken, setUserToken] = useState<string | null>();
+  const [customerData, setCustomerData] = useState<any | undefined>();
   const [availableSchedules, setAvailableSchedules] = useState([
     "07:00",
     "08:00",
@@ -55,7 +55,7 @@ export function Schedules() {
 
   // Buscando os clientes do Profissional
   useEffect(() => {
-    let user = JSON.parse(localStorage.getItem("user:customer"));
+    let user = JSON.parse(localStorage.getItem("user:customer")||'');
     let userToken = localStorage.getItem("token:customer");
     setUserToken(userToken);
     setUserData(user);
@@ -162,7 +162,7 @@ export function Schedules() {
               className={style.selectCustomer}
               onChange={(e) => handleCustomerChange(e.target.value)}
             >
-              {profissionalCustomers.map((customer, index) => {
+              {profissionalCustomers.map((customer:any, index:any) => {
                 return (
                   <option value={JSON.stringify(customer)} key={index}>
                     {customer.nome}

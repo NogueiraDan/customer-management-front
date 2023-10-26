@@ -24,7 +24,7 @@ export const Card = ({ id, hora, data, nome, telefone }: ISchedule) => {
 
     console.log("Id do agendamento: "+id)
     axios.delete(`https://customer-management-api-bdjh.onrender.com/agendamentos/${id}`)
-    .then((res)=>{
+    .then(()=>{
       window.location.reload()
     })
     .catch((err) => {

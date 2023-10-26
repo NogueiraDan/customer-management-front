@@ -1,5 +1,4 @@
 import style from "./Header.module.css";
-import logo from "../../assets/logo_branca.png";
 import custome from "../../assets/custome.png"
 import { CgProfile } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
