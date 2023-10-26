@@ -133,7 +133,7 @@ export function Schedules() {
     };
 
     axios.post("https://customer-management-api-bdjh.onrender.com/agendamentos/", data, {headers})
-    .then((res)=>{
+    .then(()=>{
       toast.success(`Agendamento realizado com Sucesso!`);
       navigate('/dashboard');
     })
