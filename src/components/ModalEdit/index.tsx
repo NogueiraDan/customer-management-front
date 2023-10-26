@@ -19,7 +19,6 @@ export function ModalEdit({
   hora,
   nome,
   id,
-  data,
 }: IModal) {
   const [date, setDate] = useState<any>();
   const [horaSchedule, setHoraSchedule] = useState("");
@@ -80,18 +79,18 @@ export function ModalEdit({
     };
     console.log(data)
 
-    // axios
-    //   .patch(`https://customer-management-api-bdjh.onrender.com/agendamentos/${id}`, data, { headers })
-    //   .then((res) => {
-    //     console.log(res);
-    //     toast.success(`Agendamento atualizado! Recarregue a página`);
-    //     handleChangeModal();
-    //   })
-    //   .catch((err) => {
-    //     if (isAxiosError(err)) {
-    //       toast.error(err.response?.data.message);
-    //     }
-    //   });
+    axios
+      .patch(`https://customer-management-api-bdjh.onrender.com/agendamentos/${id}`, data, { headers })
+      .then((res) => {
+        console.log(res);
+        toast.success(`Agendamento atualizado! Recarregue a página`);
+        handleChangeModal();
+      })
+      .catch((err) => {
+        if (isAxiosError(err)) {
+          toast.error(err.response?.data.message);
+        }
+      });
   };
 
   if (isOpen) {
