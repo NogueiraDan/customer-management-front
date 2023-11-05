@@ -68,3 +68,10 @@
 .buttonLogin span {
   font-size: 1rem;
 }
+
+
+@media (max-width: 1024px) {
+  .wrapper{
+    width: 100%;
+  }
+}

@@ -65,3 +65,9 @@
 .select label {
   color: var(--primary);
 }
+
+@media (max-width: 1024px) {
+  .formDiv{
+    width: 100%;
+  }
+}
