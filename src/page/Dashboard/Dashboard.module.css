@@ -79,6 +79,25 @@
   background-color: var(--secondary) !important;
 }
 
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 5px solid #f3f3f3;
+  border-bottom-color: hsla(160, 100%, 37%, 1);
+  border-radius: 50%;
+  display: inline-block;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 
 @media (max-width: 1024px) {
   .schedule{

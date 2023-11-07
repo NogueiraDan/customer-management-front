@@ -79,14 +79,8 @@ export function AuthProvider({ children }: IAuthProvider) {
       setUser(userData);
       return data;
 
-    } catch (error) {
-      if (isAxiosError(error)) {
-        toast.error(error.response?.data.message);
-        console.log(error)
-      } else {
-        toast.error('Não conseguimos realizar o login. Tente mais tarde');
-        console.log(error)
-      }
+    } catch{
+      toast.error('Não conseguimos realizar o login. Tente mais tarde');
     }
   }
   function signOut() {

@@ -1,21 +1,19 @@
+import "react-day-picker/dist/style.css";
+import style from "./Dashboard.module.css";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { Card } from "../../components/Card";
 import { Header } from "../../components/Header";
 import { useAuth } from "../../hooks/auth";
-import style from "./Dashboard.module.css";
 import { DayPicker } from "react-day-picker";
-import "react-day-picker/dist/style.css";
 import { ptBR } from "date-fns/locale";
-import axios from "axios";
+import {formatDate, fetchHeaders} from "../../utils/";
 
 export function Dashboard() {
   const date = new Date();
   const { user } = useAuth();
-  const token = localStorage.getItem("token:customer");
-  const dia = String(date.getDate()).padStart(2, "0");
-  const mes = String(date.getMonth() + 1).padStart(2, "0");
-  const ano = date.getFullYear();
-  const dataFormatada = `${dia}/${mes}/${ano}`;
+  const dataFormatada = formatDate(date);
+  const [isLoading, setIsLoading] = useState(true);
   const [scheduleDate, setScheduleDate] = useState<any>(dataFormatada);
   const [schedules, setSchedules] = useState<Array<any>>([]);
 
@@ -26,13 +24,12 @@ export function Dashboard() {
       .get(
         `https://customer-management-api-bdjh.onrender.com/profissionais/${user.id}/agendamentos-hoje?data=${dataFormatada}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: fetchHeaders(),
         }
       )
       .then((response) => {
         setSchedules(response.data);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -47,14 +44,13 @@ export function Dashboard() {
       .get(
         `https://customer-management-api-bdjh.onrender.com/profissionais/${user.id}/agendamentos-hoje?data=${scheduleDate}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: fetchHeaders(),
         }
       )
       .then((response) => {
         console.log(response.data)
         setSchedules(response.data);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -62,11 +58,7 @@ export function Dashboard() {
   }, [scheduleDate]);
 
   const handleDataChange = (date: Date) => {
-    const dia = String(date.getDate()).padStart(2, "0");
-    const mes = String(date.getMonth() + 1).padStart(2, "0");
-    const ano = date.getFullYear();
-    const dataFormatada = `${dia}/${mes}/${ano}`;
-    setScheduleDate(dataFormatada);
+    setScheduleDate(formatDate(date));
   };
 
   return (
@@ -79,6 +71,7 @@ export function Dashboard() {
       <h2 className={style.nextSchedules}>Agendamentos do Dia</h2>
       <div className={style.schedule}>
         <div className={style.cardWrapper}>
+        {isLoading &&  <span className={style.loader}></span>}
           {schedules && (
             <>
               {schedules.map((schedule, index) => {
@@ -96,7 +89,7 @@ export function Dashboard() {
               })}
             </>
           )}
-          {schedules.length <= 0 && (
+          {schedules.length <= 0 && !isLoading && (
             <>
               <h3 className={style.emptySchedule}>
                 Você não tem agendamentos para este dia!

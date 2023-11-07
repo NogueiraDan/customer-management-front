@@ -1,13 +1,15 @@
+import style from "./Schedules.module.css";
+import * as yup from "yup";
+import { toast } from "react-toastify";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Header } from "../../components/Header";
 import { InputSchedule } from "../../components/InputSchedule";
-import style from "./Schedules.module.css";
-import { toast } from "react-toastify";
-import axios, { isAxiosError } from "axios";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/auth";
+import { fetchHeaders } from "../../utils/";
 
 interface IFormValues {
   nome: string;
@@ -16,12 +18,11 @@ interface IFormValues {
 }
 export function Schedules() {
   const navigate = useNavigate();
-  const [profissionalCustomers, setProfissionalCustomers] = useState<any>([]);
+  const { user } = useAuth();
   const [date, setDate] = useState<any>();
-  const [currentData, setCurrentData] = useState<any>();
   const [horaSchedule, setHoraSchedule] = useState("");
-  const [userData, setUserData] = useState<any | undefined>();
-  const [userToken, setUserToken] = useState<string | null>();
+  const [profissionalCustomers, setProfissionalCustomers] = useState<any>([]);
+  const [currentData, setCurrentData] = useState<any>();
   const [customerData, setCustomerData] = useState<any | undefined>();
   const [availableSchedules, setAvailableSchedules] = useState([
     "07:00",
@@ -55,18 +56,13 @@ export function Schedules() {
 
   // Buscando os clientes do Profissional
   useEffect(() => {
-    let user = JSON.parse(localStorage.getItem("user:customer")||'');
-    let userToken = localStorage.getItem("token:customer");
-    setUserToken(userToken);
-    setUserData(user);
-
-    const headers = {
-      Authorization: `Bearer ${userToken}`,
-    };
     axios
-      .get(`https://customer-management-api-bdjh.onrender.com/profissionais/${user.id}/clientes`, {
-        headers,
-      })
+      .get(
+        `https://customer-management-api-bdjh.onrender.com/profissionais/${user.id}/clientes`,
+        {
+          headers: fetchHeaders(),
+        }
+      )
       .then((res) => {
         setProfissionalCustomers(res.data);
       })
@@ -79,9 +75,7 @@ export function Schedules() {
       .get(
         `https://customer-management-api-bdjh.onrender.com/agendamentos/horarios-disponiveis/${currentData}`,
         {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
+          headers: fetchHeaders(),
         }
       )
       .then((response) => {
@@ -92,11 +86,9 @@ export function Schedules() {
       });
   }, [date]);
 
-
-  
   // HANDLES
   const handleChangeDate = (date: string) => {
-    console.log("Data Selecionada: "+date)
+    console.log("Data Selecionada: " + date);
     setDate(date);
     const partes = date.split("-");
     const formatedData = `${partes[2]}${partes[1]}${partes[0]}`;
@@ -104,7 +96,7 @@ export function Schedules() {
   };
 
   const handleChangehour = (hora: string) => {
-    console.log("Hora selecionada: "+hora)
+    console.log("Hora selecionada: " + hora);
     setHoraSchedule(hora);
   };
 
@@ -123,30 +115,28 @@ export function Schedules() {
     const data = {
       data: dataFormatada,
       hora: horaSchedule,
-      profissional: userData.id,
+      profissional: user.id,
       cliente: customerData.id,
     };
-    console.log(data);
-  
-    const headers = {
-      Authorization: `Bearer ${userToken}`,
-    };
 
-    axios.post("https://customer-management-api-bdjh.onrender.com/agendamentos/", data, {headers})
-    .then(()=>{
-      toast.success(`Agendamento realizado com Sucesso!`);
-      navigate('/dashboard');
-    })
-    .catch((err) => {
-      if (isAxiosError(err)) {
-        toast.error(err.response?.data.message);
-      }
-      else{
-        toast.error("O servidor não está respondendo 🥺​");
-      }
-    });
+    const headers = fetchHeaders();
 
-    
+    console.log("Headers", headers);
+    console.log("Data", data);
+
+    // axios.post("https://customer-management-api-bdjh.onrender.com/agendamentos/", data, {headers})
+    // .then(()=>{
+    //   toast.success(`Agendamento realizado com Sucesso!`);
+    //   navigate('/dashboard');
+    // })
+    // .catch((err) => {
+    //   if (isAxiosError(err)) {
+    //     toast.error(err.response?.data.message);
+    //   }
+    //   else{
+    //     toast.error("O servidor não está respondendo 🥺​");
+    //   }
+    // });
   };
 
   return (
@@ -162,7 +152,7 @@ export function Schedules() {
               className={style.selectCustomer}
               onChange={(e) => handleCustomerChange(e.target.value)}
             >
-              {profissionalCustomers.map((customer:any, index:any) => {
+              {profissionalCustomers.map((customer: any, index: any) => {
                 return (
                   <option value={JSON.stringify(customer)} key={index}>
                     {customer.nome}
@@ -192,7 +182,7 @@ export function Schedules() {
               >
                 {availableSchedules.map((hour, index) => {
                   return (
-                    <option value={hour} key={index}> 
+                    <option value={hour} key={index}>
                       {hour}
                     </option>
                   );

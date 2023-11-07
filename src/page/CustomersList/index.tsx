@@ -2,21 +2,19 @@ import { useEffect, useState } from "react";
 import { Header } from "../../components/Header";
 import axios from "axios";
 import style from "./customerslist.module.css";
+import {fetchHeaders} from "../../utils/";
+import { useAuth } from "../../hooks/auth";
 
 export function CustomersList() {
   const [profissionalCustomers, setProfissionalCustomers] = useState<any>([]);
+  const { user } = useAuth();
+  
   useEffect(() => {
-    let user = JSON.parse(localStorage.getItem("user:customer") || "");
-    let userToken = localStorage.getItem("token:customer");
-
-    const headers = {
-      Authorization: `Bearer ${userToken}`,
-    };
     axios
       .get(
         `https://customer-management-api-bdjh.onrender.com/profissionais/${user.id}/clientes`,
         {
-          headers,
+          headers: fetchHeaders(),
         }
       )
       .then((res) => {

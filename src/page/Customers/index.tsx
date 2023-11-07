@@ -7,7 +7,8 @@ import axios, { isAxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useEffect, useState } from "react";
+import { fetchHeaders } from "../../utils/";
+import { useAuth } from "../../hooks/auth";
 
 interface IFormValues {
   nome: string;
@@ -16,15 +17,7 @@ interface IFormValues {
   endereco: string;
 }
 export function Customers() {
-  const [user,setUser] = useState<any>({});
-  const [token, setToken] = useState<string | any>();
-
-  useEffect(()=>{
-    let userData: any = localStorage.getItem("user:customer")
-    let userToken = localStorage.getItem("token:customer")
-    setUser(JSON.parse(userData))
-    setToken(userToken)
-  },[])
+  const { user } = useAuth();
 
   const navigate = useNavigate();
   const schema = yup.object().shape({
@@ -42,33 +35,34 @@ export function Customers() {
     resolver: yupResolver(schema),
   });
 
-
-
-
   const submit = handleSubmit(async ({ nome, idade, telefone, endereco }) => {
-   const data = {
-    nome: nome,
-    idade: parseInt(idade),
-    telefone: telefone,
-    endereco: endereco,
-    profissional: user.id
-   }
-   const headers = {
-    Authorization: `Bearer ${token}`,
-  }
+    const data = {
+      nome: nome,
+      idade: parseInt(idade),
+      telefone: telefone,
+      endereco: endereco,
+      profissional: user.id,
+    };
 
-   axios.post("https://customer-management-api-bdjh.onrender.com/clientes/", data, {headers})
-   .then((res)=>{
-    console.log(res)
-    toast.success(`Cliente cadastrado com sucesso!`);
-    navigate('/dashboard');
-   })
-   .catch((error)=>{
-    if (isAxiosError(error)) {
-      toast.error(error.response?.data.message);
-      console.log(error)
-    }
-   })
+    axios
+      .post(
+        "https://customer-management-api-bdjh.onrender.com/clientes/",
+        data,
+        {
+          headers: fetchHeaders(),
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        toast.success(`Cliente cadastrado com sucesso!`);
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        if (isAxiosError(error)) {
+          toast.error(error.response?.data.message);
+          console.log(error);
+        }
+      });
   });
 
   return (
