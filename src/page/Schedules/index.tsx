@@ -1,7 +1,7 @@
 import style from "./Schedules.module.css";
 import * as yup from "yup";
 import { toast } from "react-toastify";
-import axios from "axios";
+import axios, {isAxiosError} from "axios";
 import { useForm } from "react-hook-form";
 import { Header } from "../../components/Header";
 import { InputSchedule } from "../../components/InputSchedule";
@@ -124,19 +124,19 @@ export function Schedules() {
     console.log("Headers", headers);
     console.log("Data", data);
 
-    // axios.post("https://customer-management-api-bdjh.onrender.com/agendamentos/", data, {headers})
-    // .then(()=>{
-    //   toast.success(`Agendamento realizado com Sucesso!`);
-    //   navigate('/dashboard');
-    // })
-    // .catch((err) => {
-    //   if (isAxiosError(err)) {
-    //     toast.error(err.response?.data.message);
-    //   }
-    //   else{
-    //     toast.error("O servidor não está respondendo 🥺​");
-    //   }
-    // });
+    axios.post("https://customer-management-api-bdjh.onrender.com/agendamentos/", data, {headers})
+    .then(()=>{
+      toast.success(`Agendamento realizado com Sucesso!`);
+      navigate('/dashboard');
+    })
+    .catch((err) => {
+      if (isAxiosError(err)) {
+        toast.error(err.response?.data.message);
+      }
+      else{
+        toast.error("O servidor não está respondendo 🥺​");
+      }
+    });
   };
 
   return (
