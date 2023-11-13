@@ -20,7 +20,7 @@ npm run dev
 
 ### 💭​ Observações
 
-As features do frontend da aplicação são oriundas da API, tendo em vista que a regra de negócios do domínio é feita no Backend 
+As features do frontend da aplicação são oriundas da API, tendo em vista que a regra de negócios do domínio é feita no Backend da aplicação.
 
 ## ✒️ Autor
 
