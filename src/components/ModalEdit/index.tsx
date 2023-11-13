@@ -3,6 +3,7 @@ import style from "./ModalEdit.module.css";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios, { isAxiosError } from "axios";
+import { fetchHeaders} from "../../utils";
 
 interface IModal {
   isOpen: boolean;
@@ -25,8 +26,6 @@ export function ModalEdit({
   const [currentData, setCurrentData] = useState<any>();
   const [remarcacao, setRemarcacao] = useState<string | undefined>("");
   const [availableSchedules, setAvailableSchedules] = useState<any>();
-  const token = localStorage.getItem("token:customer");
-
 
   const handleSetDate = (date: string) => {
     console.log("Data do calendario: " + date);
@@ -46,9 +45,7 @@ export function ModalEdit({
       .get(
         `https://customer-management-api-bdjh.onrender.com/agendamentos/horarios-disponiveis/${currentData}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: fetchHeaders(),
         }
       )
       .then((response) => {
@@ -72,15 +69,17 @@ export function ModalEdit({
     const data = {
       data: dataFormatada,
       hora: horaSchedule ? horaSchedule : hora,
-      tipo: remarcacao
+      tipo: remarcacao,
     };
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-    console.log(data)
 
     axios
-      .patch(`https://customer-management-api-bdjh.onrender.com/agendamentos/${id}`, data, { headers })
+      .patch(
+        `https://customer-management-api-bdjh.onrender.com/agendamentos/${id}`,
+        data,
+        {
+          headers: fetchHeaders(),
+        }
+      )
       .then((res) => {
         console.log(res);
         toast.success(`Agendamento atualizado! Recarregue a página`);
@@ -121,14 +120,15 @@ export function ModalEdit({
                 id=""
                 onChange={(e) => handleChangehour(e.target.value)}
               >
-                {availableSchedules ? (availableSchedules.map((hora: any, index: any) => {
-                  return (
-                    <option value={hora} key={index}>
-                      {hora}
-                    </option>
-                  );
-                })) : null} 
-                
+                {availableSchedules
+                  ? availableSchedules.map((hora: any, index: any) => {
+                      return (
+                        <option value={hora} key={index}>
+                          {hora}
+                        </option>
+                      );
+                    })
+                  : null}
               </select>
             </div>
 
