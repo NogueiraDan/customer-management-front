@@ -121,9 +121,6 @@ export function Schedules() {
 
     const headers = fetchHeaders();
 
-    console.log("Headers", headers);
-    console.log("Data", data);
-
     axios.post("https://customer-management-api-bdjh.onrender.com/agendamentos/", data, {headers})
     .then(()=>{
       toast.success(`Agendamento realizado com Sucesso!`);
