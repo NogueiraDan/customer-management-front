@@ -1,6 +1,12 @@
 import { useForm } from "react-hook-form";
 import { Header } from "../../components/Header";
-import { InputSchedule } from "../../components/InputSchedule";
+import { Input } from "../../components/Input";
+import {
+  AiOutlineUser,
+  AiFillCalendar,
+  AiFillPhone,
+  AiFillPushpin,
+} from "react-icons/ai";
 import style from "./Customers.module.css";
 import { toast } from "react-toastify";
 import axios, { isAxiosError } from "axios";
@@ -74,32 +80,36 @@ export function Customers() {
 
       <div className={style.formDiv}>
         <form onSubmit={submit}>
-          <InputSchedule
+          <Input
             placeholder="Nome do cliente"
             type="text"
             {...register("nome", { required: true })}
             error={errors.nome && errors.nome.message}
+            icon={<AiOutlineUser size={20} />}
           />
 
-          <InputSchedule
+          <Input
             placeholder="Idade do Cliente"
             type="number"
             {...register("idade", { required: true })}
             error={errors.idade && errors.idade.message}
+            icon={<AiFillCalendar size={20} />}
           />
 
-          <InputSchedule
+          <Input
             placeholder="Contato do Cliente"
             type="text"
             {...register("telefone", { required: true })}
             error={errors.telefone && errors.telefone.message}
+            icon={<AiFillPhone size={20} />}
           />
 
-          <InputSchedule
+          <Input
             placeholder="Endereço do Cliente"
             type="text"
             {...register("endereco", { required: true })}
             error={errors.endereco && errors.endereco.message}
+            icon={<AiFillPushpin size={20} />}
           />
 
           <div className={style.footer}>
