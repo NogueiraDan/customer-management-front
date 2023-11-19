@@ -9,16 +9,6 @@
   margin-top: 2rem;
 }
 
-/* .footer > button:first-child {
-  border: 1px solid var(--secondary);
-  background: none;
-  color: var(--secondary);
-}
-
-.footer > button:first-child:hover {
-  background: var(--gray-50);
-} */
-
 .footer button {
   cursor: pointer;
   text-decoration: none;
@@ -41,10 +31,13 @@
 .date {
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
+  gap: 20px;
   align-items: center;
 }
 
-.date select {
+.date select,
+.date input {
   border: 1px solid var(--primary);
   border-radius: 16px;
 
@@ -85,9 +78,8 @@
   color: var(--primary);
 }
 
-
 @media (max-width: 1024px) {
-  .formDiv{
+  .formDiv {
     width: 100%;
   }
 }

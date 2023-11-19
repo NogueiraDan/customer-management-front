@@ -1,10 +1,10 @@
 import style from "./Schedules.module.css";
 import * as yup from "yup";
 import { toast } from "react-toastify";
-import axios, {isAxiosError} from "axios";
+import axios, { isAxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { Header } from "../../components/Header";
-import { InputSchedule } from "../../components/InputSchedule";
+import { Input } from "../../components/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -67,7 +67,7 @@ export function Schedules() {
         setProfissionalCustomers(res.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [user.id]);
 
   // Buscando horarios disponiveis quando a data muda
   useEffect(() => {
@@ -84,7 +84,7 @@ export function Schedules() {
       .catch((error) => {
         console.error(error);
       });
-  }, [date]);
+  }, [currentData, date]);
 
   // HANDLES
   const handleChangeDate = (date: string) => {
@@ -121,19 +121,23 @@ export function Schedules() {
 
     const headers = fetchHeaders();
 
-    axios.post("https://customer-management-api-bdjh.onrender.com/agendamentos/", data, {headers})
-    .then(()=>{
-      toast.success(`Agendamento realizado com Sucesso!`);
-      navigate('/dashboard');
-    })
-    .catch((err) => {
-      if (isAxiosError(err)) {
-        toast.error(err.response?.data.message);
-      }
-      else{
-        toast.error("O servidor não está respondendo 🥺​");
-      }
-    });
+    axios
+      .post(
+        "https://customer-management-api-bdjh.onrender.com/agendamentos/",
+        data,
+        { headers }
+      )
+      .then(() => {
+        toast.success(`Agendamento realizado com Sucesso!`);
+        navigate("/dashboard");
+      })
+      .catch((err) => {
+        if (isAxiosError(err)) {
+          toast.error(err.response?.data.message);
+        } else {
+          toast.error("O servidor não está respondendo 🥺​");
+        }
+      });
   };
 
   return (
@@ -160,7 +164,7 @@ export function Schedules() {
           </div>
 
           <div className={style.date}>
-            <InputSchedule
+            <Input
               placeholder="Dia"
               type="date"
               {...register("data", {

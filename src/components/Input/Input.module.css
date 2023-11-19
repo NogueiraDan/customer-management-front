@@ -1,9 +1,10 @@
 .container {
   display: flex;
   flex-wrap: wrap;
+  /* flex-direction: column; */
   width: 100%;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .container label {
@@ -15,7 +16,7 @@
 
 .container label i {
   position: absolute;
-  padding-left: .5rem;
+  padding-left: 0.5rem;
   left: 0;
   display: flex;
   align-items: center;
@@ -23,7 +24,7 @@
 
 .container input {
   width: 100%;
-  padding: .7rem 2.2rem;
+  padding: 0.7rem 2.2rem;
   border-radius: 8px;
   font-size: 1rem;
   border: 1px solid var(--gray-50);
