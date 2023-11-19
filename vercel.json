@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/"
+    },
+    {
+      "src": "/register",
+      "dest": "/register"
+    },
+    {
+      "src": "/dashboard",
+      "dest": "/dashboard"
+    },
+    {
+      "src": "/schedules",
+      "dest": "/schedules"
+    },
+    {
+      "src": "/customers",
+      "dest": "/customers"
+    },
+    {
+      "src": "/list-customers",
+      "dest": "/list-customers"
+    }
+  ]
+}
