@@ -7,7 +7,7 @@ import { Header } from "../../components/Header";
 import { useAuth } from "../../hooks/auth";
 import { DayPicker } from "react-day-picker";
 import { ptBR } from "date-fns/locale";
-import {formatDate, fetchHeaders} from "../../utils/";
+import { formatDate, fetchHeaders, BASE_URL } from "../../utils/";
 
 export function Dashboard() {
   const date = new Date();
@@ -22,7 +22,7 @@ export function Dashboard() {
     console.log(`Data Formatada para primeira request: ${dataFormatada}`);
     axios
       .get(
-        `https://customer-management-api-bdjh.onrender.com/profissionais/${user.id}/agendamentos-hoje?data=${dataFormatada}`,
+        `${BASE_URL}/profissionais/${user.id}/agendamentos-hoje?data=${dataFormatada}`,
         {
           headers: fetchHeaders(),
         }
@@ -36,19 +36,20 @@ export function Dashboard() {
       });
   }, []);
 
-  
   // Requisição dos demais agendamentos
   useEffect(() => {
-    console.log(`schedule Date da requisição dos demais agendamentos: ${scheduleDate}`)
+    console.log(
+      `schedule Date da requisição dos demais agendamentos: ${scheduleDate}`
+    );
     axios
       .get(
-        `https://customer-management-api-bdjh.onrender.com/profissionais/${user.id}/agendamentos-hoje?data=${scheduleDate}`,
+        `${BASE_URL}/profissionais/${user.id}/agendamentos-hoje?data=${scheduleDate}`,
         {
           headers: fetchHeaders(),
         }
       )
       .then((response) => {
-        console.log(response.data)
+        console.log(response.data);
         setSchedules(response.data);
         setIsLoading(false);
       })
@@ -66,12 +67,14 @@ export function Dashboard() {
       <Header />
       <div className={style.dataTitle}>
         <h2>Bem vindo(a), {user.nome} </h2>
-        <p>Esta é sua lista de horários para <strong>{scheduleDate}</strong></p>
+        <p>
+          Esta é sua lista de horários para <strong>{scheduleDate}</strong>
+        </p>
       </div>
       <h2 className={style.nextSchedules}>Agendamentos do Dia</h2>
       <div className={style.schedule}>
         <div className={style.cardWrapper}>
-        {isLoading &&  <span className={style.loader}></span>}
+          {isLoading && <span className={style.loader}></span>}
           {schedules && (
             <>
               {schedules.map((schedule, index) => {
@@ -83,7 +86,6 @@ export function Dashboard() {
                     data={schedule.data}
                     nome={schedule.cliente.nome}
                     telefone={schedule.cliente.telefone}
-                  
                   />
                 );
               })}

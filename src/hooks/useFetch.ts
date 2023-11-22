@@ -1,45 +1,49 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
-function useFetch(url:any, method:any, headers: any, dependencies = []) {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+// Definição do tipo para os parâmetros da requisição
+type RequestOptions = {
+  url: string;
+  method: "GET" | "POST" | "PUT" | "DELETE"; // Adicione outros métodos conforme necessário
+  headers?: any; // Tipo genérico para os headers
+  dependencies?: any[]; // Dependências para casos de useEffect com dependências
+};
+
+// Custom Hook para requisições HTTP genéricas
+function useFetch({
+  url,
+  method,
+  headers,
+  dependencies = [],
+}: RequestOptions): [any, boolean, Error | null] {
+  const [data, setData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | null | any>(null);
 
   useEffect(() => {
-    let isMounted = true; // To prevent state updates on unmounted components
-
     const fetchData = async () => {
+      setIsLoading(true);
       try {
-        const response = await axios({
-          url,
+        const config: AxiosRequestConfig = {
           method,
-          headers
-          // You can add more headers here if needed
-        });
+          url,
+          headers,
+        };
 
-        if (isMounted) {
-          setData(response.data);
-          setLoading(false);
-          setError(null);
-        }
-      } catch (err:any) {
-        if (isMounted) {
-          setData(null);
-          setLoading(false);
-          setError(err);
-        }
+        const response: AxiosResponse = await axios(config);
+        setData(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        setError(error);
+        setIsLoading(false);
       }
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, dependencies); // Se não houver dependências, não é necessário reexecutar a requisição
 
-    return () => {
-      isMounted = false; // Clean up on unmount
-    };
-  }, [url, method, headers, ...dependencies]);
-
-  return { data, loading, error };
+  return [data, isLoading, error];
 }
 
 export default useFetch;
