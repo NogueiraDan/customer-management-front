@@ -16,7 +16,7 @@ function useFetch({
   headers,
   dependencies = [],
 }: RequestOptions): [any, boolean, Error | null] {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<Array<any>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null | any>(null);
 

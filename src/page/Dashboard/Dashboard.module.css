@@ -10,7 +10,7 @@
   justify-content: space-between;
 }
 
-.emptySchedule{
+.emptySchedule {
   color: var(--primary);
   font-size: 1.2rem;
 }
@@ -64,14 +64,12 @@
   width: 40px;
   height: 40px;
   color: var(--black);
-  margin: .15rem;
+  margin: 0.15rem;
   border-radius: 5px;
-
 }
 
 .day.disabled {
   background-color: var(--gray-200) !important;
-
 }
 
 .selected {
@@ -80,9 +78,12 @@
 }
 
 .loader {
-  width: 40px;
-  height: 40px;
-  border: 5px solid #f3f3f3;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  border: 6px solid #f9f9f9;
   border-bottom-color: hsla(160, 100%, 37%, 1);
   border-radius: 50%;
   display: inline-block;
@@ -98,16 +99,14 @@
   }
 }
 
-
 @media (max-width: 1024px) {
-  .schedule{
+  .schedule {
     flex-direction: column;
     align-items: center;
   }
 
-  .cardWrapper{
+  .cardWrapper {
     width: 100%;
     height: auto;
   }
-
 }
