@@ -15,6 +15,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { fetchHeaders } from "../../utils/";
 import { useAuth } from "../../hooks/auth";
+import { BASE_URL } from "../../utils/";
+import { useState } from "react";
 
 interface IFormValues {
   nome: string;
@@ -24,7 +26,7 @@ interface IFormValues {
 }
 export function Customers() {
   const { user } = useAuth();
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const schema = yup.object().shape({
     nome: yup.string().required("Campo de Nome obrigatório"),
@@ -42,6 +44,7 @@ export function Customers() {
   });
 
   const submit = handleSubmit(async ({ nome, idade, telefone, endereco }) => {
+    setLoading(true);
     const data = {
       nome: nome,
       idade: parseInt(idade),
@@ -51,13 +54,9 @@ export function Customers() {
     };
 
     axios
-      .post(
-        "https://customer-management-api-bdjh.onrender.com/clientes/",
-        data,
-        {
-          headers: fetchHeaders(),
-        }
-      )
+      .post(`${BASE_URL}/clientes/`, data, {
+        headers: fetchHeaders(),
+      })
       .then((res) => {
         console.log(res);
         toast.success(`Cliente cadastrado com sucesso!`);
@@ -72,52 +71,59 @@ export function Customers() {
   });
 
   return (
-    <div className={`${style.container} container`}>
+    <>
       <Header />
-      <h2>
-        <strong>Cadastro de Cliente</strong>
-      </h2>
+      <div className={`${style.container} container`}>
+        <h2>
+          <strong>Cadastro de Cliente</strong>
+          {loading && (
+            <p className={`${style.loadingText} ${style.fadeIn}`}>
+              Aguarde um pouco...
+            </p>
+          )}
+        </h2>
 
-      <div className={style.formDiv}>
-        <form onSubmit={submit}>
-          <Input
-            placeholder="Nome do cliente"
-            type="text"
-            {...register("nome", { required: true })}
-            error={errors.nome && errors.nome.message}
-            icon={<AiOutlineUser size={20} />}
-          />
+        <div className={style.formDiv}>
+          <form onSubmit={submit}>
+            <Input
+              placeholder="Nome do cliente"
+              type="text"
+              {...register("nome", { required: true })}
+              error={errors.nome && errors.nome.message}
+              icon={<AiOutlineUser size={20} />}
+            />
 
-          <Input
-            placeholder="Idade do Cliente"
-            type="number"
-            {...register("idade", { required: true })}
-            error={errors.idade && errors.idade.message}
-            icon={<AiFillCalendar size={20} />}
-          />
+            <Input
+              placeholder="Idade do Cliente"
+              type="number"
+              {...register("idade", { required: true })}
+              error={errors.idade && errors.idade.message}
+              icon={<AiFillCalendar size={20} />}
+            />
 
-          <Input
-            placeholder="Contato do Cliente"
-            type="text"
-            {...register("telefone", { required: true })}
-            error={errors.telefone && errors.telefone.message}
-            icon={<AiFillPhone size={20} />}
-          />
+            <Input
+              placeholder="Contato do Cliente"
+              type="text"
+              {...register("telefone", { required: true })}
+              error={errors.telefone && errors.telefone.message}
+              icon={<AiFillPhone size={20} />}
+            />
 
-          <Input
-            placeholder="Endereço do Cliente"
-            type="text"
-            {...register("endereco", { required: true })}
-            error={errors.endereco && errors.endereco.message}
-            icon={<AiFillPushpin size={20} />}
-          />
+            <Input
+              placeholder="Endereço do Cliente"
+              type="text"
+              {...register("endereco", { required: true })}
+              error={errors.endereco && errors.endereco.message}
+              icon={<AiFillPushpin size={20} />}
+            />
 
-          <div className={style.footer}>
-            <button className={style.buttonSubmit}>Salvar</button>
-          </div>
-        </form>
-        {/* <button>Cancelar</button> */}
+            <div className={style.footer}>
+              <button className={style.buttonSubmit}>Salvar</button>
+            </div>
+          </form>
+          {/* <button>Cancelar</button> */}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

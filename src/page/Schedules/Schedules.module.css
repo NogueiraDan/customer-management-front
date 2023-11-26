@@ -48,8 +48,13 @@
   padding: 0.5rem;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .container h2 {
-  font-weight: 300;
+  font-weight: 500;
   color: var(--primary);
   margin-top: 2rem;
   margin-bottom: 1rem;
@@ -76,6 +81,30 @@
 
 .select label {
   color: var(--primary);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation: fade-in 0.3s ease-in-out;
+}
+
+.loadingText {
+  font-size: 20px;
+  padding: 8px;
+  border-radius: 24px;
+  background: #fff;
+  margin: 0 auto;
+  width: 50%;
+  margin-bottom: 16px;
+  text-align: center;
 }
 
 @media (max-width: 1024px) {

@@ -1,5 +1,6 @@
+import { useState } from "react";
 import style from "./Login.module.css";
-import custome from "../../assets/custome.png"
+import custome from "../../assets/custome.png";
 import { Input } from "../../components/Input";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -16,6 +17,7 @@ interface IFormValues {
 
 export function Login() {
   const { signIn } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const schema = yup.object().shape({
     email: yup
@@ -37,20 +39,25 @@ export function Login() {
     const emailValue = getValues("email");
     const senhaValue = getValues("senha");
     try {
+      setLoading(true);
       signIn({ emailValue, senhaValue });
     } catch (error) {
       console.log("🚀 ~ file: index.tsx:45 ~ submit ~ error:", error);
     }
   };
 
-
   return (
     <div className={style.background}>
       <div className={`container ${style.container}`}>
         <div className={style.wrapper}>
-          <div>
-            <img src={custome} alt="" width={150} height={150}/>
+          <div className={style.headerWrapper}>
+            <img src={custome} alt="" width={150} height={150} />
           </div>
+          {loading && (
+            <p className={`${style.loadingText} ${style.fadeIn}`}>
+              Aguarde um pouco...
+            </p>
+          )}
           <div className={style.card}>
             <h2>Olá, seja bem vindo</h2>
 

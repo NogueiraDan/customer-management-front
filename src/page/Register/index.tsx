@@ -11,6 +11,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import { BASE_URL } from "../../utils";
 
 interface IFormValues {
   name: string;
@@ -40,7 +41,7 @@ export function Register() {
 
   const submit = handleSubmit((data) => {
     axios
-      .post("https://customer-management-api-bdjh.onrender.com/profissionais/", {
+      .post(`${BASE_URL}/profissionais/`, {
         nome: data.name,
         email: data.email,
         senha: data.password,

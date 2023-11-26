@@ -27,59 +27,61 @@ export function Dashboard() {
   };
 
   return (
-    <div className="container">
+    <>
       <Header />
-      <div className={style.dataTitle}>
-        <h2>Bem vindo(a), {user.nome} </h2>
-        <p>
-          Esta é sua lista de horários para <strong>{scheduleDate}</strong>
-        </p>
-      </div>
-      <h2 className={style.nextSchedules}>Agendamentos do Dia</h2>
-      <div className={style.schedule}>
-        <div className={style.cardWrapper}>
-          {isLoading && <span className={style.loader}></span>}
-          {schedules && (
-            <>
-              {schedules.map((schedule: any, index: any) => {
-                return (
-                  <Card
-                    key={index}
-                    id={schedule.id}
-                    hora={schedule.hora}
-                    data={schedule.data}
-                    nome={schedule.cliente.nome}
-                    telefone={schedule.cliente.telefone}
-                  />
-                );
-              })}
-            </>
-          )}
-          {schedules.length <= 0 && !isLoading && (
-            <>
-              <h3 className={style.emptySchedule}>
-                Você não tem agendamentos para este dia!
-              </h3>
-            </>
-          )}
+      <div className="container">
+        <div className={style.dataTitle}>
+          <h2>Bem vindo(a), {user.nome} </h2>
+
+          <h2 className={style.nextSchedules}>
+            Agendamentos do Dia <strong>{scheduleDate}</strong>
+          </h2>
         </div>
-        <div className={style.picker}>
-          <DayPicker
-            className={style.calendar}
-            classNames={{
-              day: style.day,
-            }}
-            selected={date}
-            mode="single"
-            modifiersClassNames={{
-              selected: style.selected,
-            }}
-            fromMonth={new Date()}
-            locale={ptBR}
-            onDayClick={handleDataChange}
-          />
+        <div className={style.schedule}>
+          <div className={style.cardWrapper}>
+            {isLoading && <span className={style.loader}></span>}
+            {schedules && (
+              <>
+                {schedules.map((schedule: any, index: any) => {
+                  return (
+                    <Card
+                      key={index}
+                      id={schedule.id}
+                      hora={schedule.hora}
+                      data={schedule.data}
+                      nome={schedule.cliente.nome}
+                      telefone={schedule.cliente.telefone}
+                    />
+                  );
+                })}
+              </>
+            )}
+            {schedules.length <= 0 && !isLoading && (
+              <>
+                <h3 className={style.emptySchedule}>
+                  Você não tem agendamentos para este dia!
+                </h3>
+              </>
+            )}
+          </div>
+          <div className={style.picker}>
+            <DayPicker
+              className={style.calendar}
+              classNames={{
+                day: style.day,
+              }}
+              selected={date}
+              mode="single"
+              modifiersClassNames={{
+                selected: style.selected,
+              }}
+              fromMonth={new Date()}
+              locale={ptBR}
+              onDayClick={handleDataChange}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
