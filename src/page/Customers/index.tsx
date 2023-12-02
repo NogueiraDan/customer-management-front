@@ -17,6 +17,7 @@ import { fetchHeaders } from "../../utils/";
 import { useAuth } from "../../hooks/auth";
 import { BASE_URL } from "../../utils/";
 import { useState } from "react";
+import Loading from "../../components/Loading";
 
 interface IFormValues {
   nome: string;
@@ -76,11 +77,7 @@ export function Customers() {
       <div className={`${style.container} container`}>
         <h2>
           <strong>Cadastro de Cliente</strong>
-          {loading && (
-            <p className={`${style.loadingText} ${style.fadeIn}`}>
-              Aguarde um pouco...
-            </p>
-          )}
+          {loading && <Loading type="request" />}
         </h2>
 
         <div className={style.formDiv}>

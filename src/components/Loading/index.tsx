@@ -1,5 +1,18 @@
 import style from "./Loading.module.css";
 
-export default function Loading() {
-  return <span className={style.loader}></span>;
+interface TypeProps {
+  type: "request" | "spinner";
+}
+export default function Loading({ type }: TypeProps) {
+  return (
+    <>
+      {type === "spinner" ? (
+        <span className={style.loader}></span>
+      ) : (
+        <p className={`${style.loadingText} ${style.fadeIn}`}>
+          Aguarde um pouco...
+        </p>
+      )}
+    </>
+  );
 }

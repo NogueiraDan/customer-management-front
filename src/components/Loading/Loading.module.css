@@ -10,6 +10,19 @@
   display: inline-block;
   animation: rotation 1s linear infinite;
 }
+.fadeIn {
+  animation: fade-in 0.3s ease-in-out;
+}
+.loadingText {
+  font-size: 20px;
+  padding: 8px;
+  border-radius: 24px;
+  background: #fff;
+  margin: 0 auto;
+  width: 50%;
+  margin-bottom: 16px;
+  text-align: center;
+}
 
 @keyframes rotation {
   0% {
@@ -17,5 +30,14 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

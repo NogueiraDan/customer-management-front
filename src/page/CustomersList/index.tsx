@@ -23,7 +23,7 @@ export function CustomersList() {
       <div className={style.container}>
         <h1 className={style.title}>Sua carteira de Clientes</h1>
         <div>
-          {isLoading && <Loading />}
+          {isLoading && <Loading type="spinner" />}
           {profissionalCustomers.map((customer: Customer) => (
             <div className={style.customerWrapper}>
               <h3>Nome: {customer.nome}</h3>

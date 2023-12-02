@@ -25,6 +25,7 @@ As features do frontend da aplicação são oriundas da API, tendo em vista que 
 Melhorias
 [X] - Divisão de reponsabildades
 [x] - Tipagens de alguns dados e funções
+[] - Edit e Delete de Customer
 
 ## ✒️ Autor
 

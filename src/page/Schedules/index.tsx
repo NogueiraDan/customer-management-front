@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth";
 import { fetchHeaders, BASE_URL } from "../../utils/";
 import { Customer } from "../../types";
+import Loading from "../../components/Loading";
 
 interface IFormValues {
   nome: string;
@@ -137,11 +138,7 @@ export function Schedules() {
       <div className={`${style.container} container`}>
         <h2>Agendamento de Horário</h2>
         <div className={style.formDiv}>
-          {loading && (
-            <p className={`${style.loadingText} ${style.fadeIn}`}>
-              Aguarde um pouco...
-            </p>
-          )}
+          {loading && <Loading type="request" />}
           <form>
             {/* DROPDOWN DE CLIENTES */}
             <div>

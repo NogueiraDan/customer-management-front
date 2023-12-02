@@ -41,7 +41,7 @@ export function Dashboard() {
         </div>
         <div className={style.schedule}>
           <div className={style.cardWrapper}>
-            {isLoading && <Loading />}
+            {isLoading && <Loading type="spinner" />}
             {schedules && (
               <>
                 {schedules.map((schedule: Schedule, index: never) => {

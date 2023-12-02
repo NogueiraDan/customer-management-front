@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { AiOutlineMail } from "react-icons/ai";
 import { BsKey } from "react-icons/bs";
 import { useAuth } from "../../hooks/auth";
+import Loading from "../../components/Loading";
 
 interface IFormValues {
   email: string;
@@ -53,11 +54,7 @@ export function Login() {
           <div className={style.headerWrapper}>
             <img src={custome} alt="" width={150} height={150} />
           </div>
-          {loading && (
-            <p className={`${style.loadingText} ${style.fadeIn}`}>
-              Aguarde um pouco...
-            </p>
-          )}
+          {loading && <Loading type="request" />}
           <div className={style.card}>
             <h2>Olá, seja bem vindo</h2>
 
