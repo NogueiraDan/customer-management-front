@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth";
 import { fetchHeaders, BASE_URL } from "../../utils/";
+import { Customer } from "../../types";
 
 interface IFormValues {
   nome: string;
@@ -61,10 +62,10 @@ export function Schedules() {
       .get(`${BASE_URL}/profissionais/${user.id}/clientes`, {
         headers: fetchHeaders(),
       })
-      .then((res) => {
-        setProfissionalCustomers(res.data);
+      .then((response) => {
+        setProfissionalCustomers(response.data);
       })
-      .catch((err) => console.log(err));
+      .catch((error) => console.log(error));
   }, [user.id]);
 
   // Buscando horarios disponiveis quando a data muda
@@ -96,7 +97,7 @@ export function Schedules() {
   };
 
   const handleCustomerChange = (selectedCustomer: any) => {
-    const customer: any = JSON.parse(selectedCustomer);
+    const customer: Customer = JSON.parse(selectedCustomer);
     // console.log("Cliente selecionado:", customer);
     setCustomerData(customer);
   };
@@ -149,13 +150,15 @@ export function Schedules() {
                 className={style.selectCustomer}
                 onChange={(e) => handleCustomerChange(e.target.value)}
               >
-                {profissionalCustomers.map((customer: any, index: any) => {
-                  return (
-                    <option value={JSON.stringify(customer)} key={index}>
-                      {customer.nome}
-                    </option>
-                  );
-                })}
+                {profissionalCustomers.map(
+                  (customer: Customer, index: never) => {
+                    return (
+                      <option value={JSON.stringify(customer)} key={index}>
+                        {customer.nome}
+                      </option>
+                    );
+                  }
+                )}
               </select>
             </div>
 

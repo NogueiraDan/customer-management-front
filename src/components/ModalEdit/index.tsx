@@ -1,9 +1,11 @@
 import { AiOutlineClose } from "react-icons/ai";
 import style from "./ModalEdit.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import axios, { isAxiosError } from "axios";
-import { fetchHeaders} from "../../utils";
+import { fetchHeaders } from "../../utils";
+import { BASE_URL } from "../../utils";
+import useFetch from "../../hooks/useFetch";
 
 interface IModal {
   isOpen: boolean;
@@ -25,7 +27,6 @@ export function ModalEdit({
   const [horaSchedule, setHoraSchedule] = useState("");
   const [currentData, setCurrentData] = useState<any>();
   const [remarcacao, setRemarcacao] = useState<string | undefined>("");
-  const [availableSchedules, setAvailableSchedules] = useState<any>();
 
   const handleSetDate = (date: string) => {
     console.log("Data do calendario: " + date);
@@ -36,25 +37,12 @@ export function ModalEdit({
     setCurrentData(formatedData);
   };
 
-  useEffect(() => {
-    console.log(
-      "Modal Edit.tsx ~ Data Formatada para o envio da Requisição: " +
-        currentData
-    );
-    axios
-      .get(
-        `https://customer-management-api-bdjh.onrender.com/agendamentos/horarios-disponiveis/${currentData}`,
-        {
-          headers: fetchHeaders(),
-        }
-      )
-      .then((response) => {
-        setAvailableSchedules(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [date]);
+  const [availableSchedules] = useFetch({
+    url: `${BASE_URL}/agendamentos/horarios-disponiveis/${currentData}`,
+    method: "GET",
+    headers: fetchHeaders(),
+    dependencies: [currentData, date],
+  });
 
   const handleChangehour = (hora: string) => {
     setHoraSchedule(hora);

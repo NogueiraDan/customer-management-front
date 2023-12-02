@@ -1,35 +1,30 @@
-import { useEffect, useState } from "react";
-import { Header } from "../../components/Header";
-import axios from "axios";
 import style from "./customerslist.module.css";
-import {fetchHeaders} from "../../utils/";
+import useFetch from "../../hooks/useFetch";
+import { BASE_URL } from "../../utils/";
+import { Header } from "../../components/Header";
+import { fetchHeaders } from "../../utils/";
 import { useAuth } from "../../hooks/auth";
+import { Customer } from "../../types";
+import Loading from "../../components/Loading";
 
 export function CustomersList() {
-  const [profissionalCustomers, setProfissionalCustomers] = useState<any>([]);
   const { user } = useAuth();
-  
-  useEffect(() => {
-    axios
-      .get(
-        `https://customer-management-api-bdjh.onrender.com/profissionais/${user.id}/clientes`,
-        {
-          headers: fetchHeaders(),
-        }
-      )
-      .then((res) => {
-        console.log(res.data);
-        setProfissionalCustomers(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+
+  const [profissionalCustomers, isLoading] = useFetch({
+    url: `${BASE_URL}/profissionais/${user.id}/clientes`,
+    method: "GET",
+    headers: fetchHeaders(),
+    dependencies: [user.id],
+  });
+
   return (
     <>
       <Header />
       <div className={style.container}>
         <h1 className={style.title}>Sua carteira de Clientes</h1>
         <div>
-          {profissionalCustomers.map((customer: any) => (
+          {isLoading && <Loading />}
+          {profissionalCustomers.map((customer: Customer) => (
             <div className={style.customerWrapper}>
               <h3>Nome: {customer.nome}</h3>
               <p>

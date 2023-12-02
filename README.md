@@ -22,7 +22,10 @@ npm run dev
 
 As features do frontend da aplicação são oriundas da API, tendo em vista que a regra de negócios do domínio é feita no Backend da aplicação.
 
+Melhorias
+[X] - Divisão de reponsabildades
+[x] - Tipagens de alguns dados e funções
+
 ## ✒️ Autor
 
-* **Daniel Nogueira** - *Web Developer* - [Github](https://github.com/NogueiraDan)
-
+- **Daniel Nogueira** - _Web Developer_ - [Github](https://github.com/NogueiraDan)

@@ -1,5 +1,6 @@
 import "react-day-picker/dist/style.css";
 import style from "./Dashboard.module.css";
+import useFetch from "../../hooks/useFetch";
 import { useState } from "react";
 import { Card } from "../../components/Card";
 import { Header } from "../../components/Header";
@@ -7,13 +8,14 @@ import { useAuth } from "../../hooks/auth";
 import { DayPicker } from "react-day-picker";
 import { ptBR } from "date-fns/locale";
 import { formatDate, fetchHeaders, BASE_URL } from "../../utils/";
-import useFetch from "../../hooks/useFetch";
+import { Schedule } from "../../types";
+import Loading from "../../components/Loading";
 
 export function Dashboard() {
   const date = new Date();
   const { user } = useAuth();
   const dataFormatada = formatDate(date);
-  const [scheduleDate, setScheduleDate] = useState<any>(dataFormatada);
+  const [scheduleDate, setScheduleDate] = useState<string>(dataFormatada);
 
   const [schedules, isLoading] = useFetch({
     url: `${BASE_URL}/profissionais/${user.id}/agendamentos-hoje?data=${scheduleDate}`,
@@ -39,10 +41,10 @@ export function Dashboard() {
         </div>
         <div className={style.schedule}>
           <div className={style.cardWrapper}>
-            {isLoading && <span className={style.loader}></span>}
+            {isLoading && <Loading />}
             {schedules && (
               <>
-                {schedules.map((schedule: any, index: any) => {
+                {schedules.map((schedule: Schedule, index: never) => {
                   return (
                     <Card
                       key={index}
